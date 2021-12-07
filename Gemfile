@@ -8,9 +8,11 @@ gem 'activerecord', '~> 4.2.0'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-activerecord'
+gem 'bcrypt'
 
 gem 'puma'
 gem 'tux'
+
 
 group :development, :test do
   gem 'pry'

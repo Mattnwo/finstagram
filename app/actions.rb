@@ -51,11 +51,9 @@ post '/signup' do
    @user = User.find_by(username: username)
 
    # 2.  If that user exists
-   if @user && @user.password == password
-   #if user && user.authenticate(password)
-   session[:user_id] = @user.id   
-      #login (more to come)
-      #"Success!! User with id #{session[:user_id]} is logged in!!"
+   #if @user && @user.password == password - this is for non-encrypted password - before bcrypt was installed.
+   if @user && @user.authenticate(password)
+      session[:user_id] = @user.id
       redirect to('/')
    else 
      @error_message =  "Login Failed"
@@ -89,4 +87,31 @@ end
 get '/finstagram_posts/:id' do
    @finstagram_post = FinstagramPost.find(params[:id])
    erb(:"finstagram_posts/show")
+end
+
+post '/comments' do
+   # point values from params to variables
+   text = params[:text]
+   finstagram_post_id = params[:finstagram_post_id]
+
+   #instantiate a comment with those values and assign the comment to 'current user'
+   comment = Comment.new({ text: text, finstagram_post_id: finstagram_post_id, user_id: current_user.id })
+   comment.save
+   redirect(back)
+
+end
+
+post '/likes' do
+   finstagram_post_id = params[:finstagram_post_id]
+
+   like = Like.new({ finstagram_post_id: finstagram_post_id, user_id: current_user.id })
+   like.save
+
+   redirect(back)
+end
+
+delete '/likes/:id' do
+   like = Like.find(params[:id])
+   like.destroy
+   redirect(back)
 end

@@ -28,3 +28,28 @@ a.photo {
 a.photo:hover {
     padding: 10px;
 }
+
+@media screen and (max-width: 768px) {
+    main {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    header {
+        display: flex;
+        align-items: center;
+    }
+    header h1 {
+        font-size: 1.5em;
+    }
+    header .login-info {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.85em;
+    }
+    header .login-info a {
+        padding: 5px 0;
+    }
+}
