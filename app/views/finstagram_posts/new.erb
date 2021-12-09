@@ -2,6 +2,7 @@
 
 <%= erb(:'shared/errors', {locals: { errors: @finstagram_post.errors.full_messages }}) %>
     
+<img id="preview" src="" alt="" style="display: none; max-width: 200px">
 
 <form action="/finstagram_posts" method="POST">
     <div class="form-group">
@@ -12,3 +13,32 @@
         <button class="button" type="submit">Post</button>
     </div>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function() {
+
+        $("#photo_url").on("blur", function() {
+
+            var photoUrl = $(this).val();
+            var preview = $("#preview");
+
+            if(photoUrl) {
+            // modify image src attribute
+            preview.attr("src", photoUrl);
+            // show the element
+            preview.show();
+
+
+            } else {
+            preview.hide();
+            }
+        });
+
+    })
+
+
+</script>

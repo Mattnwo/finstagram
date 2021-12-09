@@ -2,6 +2,11 @@ helpers do
    def current_user
       User.find_by(id: session[:user_id])
    end
+
+   def logged_in?
+      !!current_user
+   end
+
 end
 
 
@@ -67,6 +72,12 @@ get '/logout' do
 
 end
 
+before '/finstagram_posts/new' do
+   redirect to('/login') unless logged_in?
+end
+
+
+
 get '/finstagram_posts/new' do
    @finstagram_post = FinstagramPost.new
    erb(:"finstagram_posts/new")
@@ -85,8 +96,15 @@ post '/finstagram_posts' do
 end
 
 get '/finstagram_posts/:id' do
-   @finstagram_post = FinstagramPost.find(params[:id])
-   erb(:"finstagram_posts/show")
+   @finstagram_post = FinstagramPost.find_by(id: params[:id])
+   
+   if @finstagram_post   
+      erb(:"finstagram_posts/show")
+
+   else
+      halt(404, erb(:"errors/404"))
+   end
+
 end
 
 post '/comments' do
